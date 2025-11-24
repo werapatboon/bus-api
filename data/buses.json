@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "lineNumber": "8",
+    "lineName": "Victory Monument - Banglamphu",
+    "lineName_th": "อนุสาวรีย์ชัย - บางลำพู",
+    "route": ["อนุสาวรีย์ชัย", "ราชเทวี", "สยาม", "สนามหลวง", "บางลำพู"],
+    "startTime": "05:00",
+    "endTime": "22:00",
+    "frequency": "ทุก 15 นาที",
+    "image": "https://example.com/images/bus8.jpg",
+    "details": "Connects central Bangkok with historic areas.",
+    "details_th": "เชื่อมต่อใจกลางกรุงเทพฯ กับพื้นที่ประวัติศาสตร์",
+    "operator": "BMTA",
+    "operator_th": "ขสมก.",
+    "categoryId": 1
+  },
+  {
+    "id": 2,
+    "lineNumber": "44",
+    "lineName": "Rangsit - Phra Arthit",
+    "lineName_th": "รังสิต - พระอาทิตย์",
+    "route": ["รังสิต", "มหาวิทยาลัยธรรมศาสตร์", "บางเขน", "อนุสาวรีย์ชัย", "พระอาทิตย์"],
+    "startTime": "04:30",
+    "endTime": "21:30",
+    "frequency": "ทุก 20 นาที",
+    "image": "https://example.com/images/bus44.jpg",
+    "details": "Popular route for students and commuters.",
+    "details_th": "สายยอดนิยมสำหรับนักศึกษาและผู้เดินทาง",
+    "operator": "BMTA",
+    "operator_th": "ขสมก.",
+    "categoryId": 2
+  }
+] 
