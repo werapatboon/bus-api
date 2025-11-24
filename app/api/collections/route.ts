@@ -1,40 +1,56 @@
-import { NextResponse } from "next/server";
-import fs from "fs";
+import { NextRequest, NextResponse } from "next/server";
+import { promises as fs } from "fs";
 import path from "path";
 import type { Collection, CollectionsResponse } from "../../../src/types/collection";
-import type { Bus } from "../../../src/types/bus";
 
-const collectionsPath = path.join(process.cwd(), "data", "collections.json");
-const busesPath = path.join(process.cwd(), "data", "buses.json");
+const filePath = path.join(process.cwd(), "data", "collections.json");
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-};
-
-export async function GET() {
-  // อ่านไฟล์
-  const collectionsData = fs.readFileSync(collectionsPath, "utf-8");
-  const busesData = fs.readFileSync(busesPath, "utf-8");
-
-  const collections: Collection[] = JSON.parse(collectionsData);
-  const buses: Bus[] = JSON.parse(busesData);
-
-  // join busIds -> buses
-  const enrichedCollections = collections.map((c) => ({
-    ...c,
-    buses: buses.filter((bus) => c.busIds.includes(bus.id)),
-  }));
-
-  const response: CollectionsResponse = {
-    total: enrichedCollections.length,
-    data: enrichedCollections,
-  };
-
-  return NextResponse.json(response, { headers: corsHeaders });
+// ✅ รองรับ preflight CORS
+export async function OPTIONS() {
+  return NextResponse.json({}, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
 
-export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders });
+export async function GET(req: NextRequest) {
+  try {
+    // อ่านไฟล์ collections.json แบบ async
+    const data = await fs.readFile(filePath, "utf-8");
+    const collections: Collection[] = JSON.parse(data);
+
+    // query params สำหรับ pagination
+    const { searchParams } = new URL(req.url);
+    const offset = Number(searchParams.get("offset") ?? 0);
+    const limit = Number(searchParams.get("limit") ?? collections.length);
+
+    // slice ข้อมูลตาม offset/limit
+    const paginated = collections.slice(offset, offset + limit);
+
+    const response: CollectionsResponse = {
+      total: collections.length,
+      offset,
+      limit,
+      lang: "en", // หรือ "th" ถ้าอยากรองรับหลายภาษา
+      data: paginated,
+    };
+
+    return NextResponse.json(response, {
+      status: 200,
+      headers: { "Access-Control-Allow-Origin": "*" },
+    });
+  } catch (err) {
+    console.error("Collections API error:", err);
+    return NextResponse.json(
+      { message: "Server error" },
+      {
+        status: 500,
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }
+    );
+  }
 }
