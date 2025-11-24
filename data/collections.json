@@ -4,20 +4,23 @@
     "title": "Ordinary Bus",
     "title_th": "รถธรรมดา",
     "description": "Non-air-conditioned buses serving Bangkok routes.",
-    "description_th": "รถเมล์ธรรมดาที่ให้บริการในกรุงเทพฯ"
+    "description_th": "รถเมล์ธรรมดาที่ให้บริการในกรุงเทพฯ",
+    "busIds": [1]   
   },
   {
     "id": 2,
     "title": "Air-conditioned Bus",
     "title_th": "รถปรับอากาศ",
     "description": "Comfortable buses with air conditioning.",
-    "description_th": "รถเมล์ปรับอากาศที่ให้บริการในกรุงเทพฯ"
+    "description_th": "รถเมล์ปรับอากาศที่ให้บริการในกรุงเทพฯ",
+    "busIds": [2]
   },
   {
     "id": 3,
     "title": "Private Operator",
     "title_th": "รถร่วมบริการ",
     "description": "Privately operated buses working alongside BMTA.",
-    "description_th": "รถร่วมบริการที่วิ่งควบคู่กับ ขสมก."
+    "description_th": "รถร่วมบริการที่วิ่งควบคู่กับ ขสมก.",
+    "busIds": [3]
   }
 ]
